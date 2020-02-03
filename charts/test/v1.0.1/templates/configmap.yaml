@@ -1,11 +1,11 @@
 ﻿apiVersion: v1
 data:
   DBHOST: localhost
-  DBNAME: tmf
-  DBPASSWORD: mongodb
+  DBNAME: {{database-name}}
+  DBPASSWORD: {{database-password}}
   DBPORT: "27017"
   DBPROT: mongodb
-  DBUSER: mongodb
+  DBUSER: {{database-user}}
 kind: ConfigMap
 metadata:
   name: tmf-config-ttri
