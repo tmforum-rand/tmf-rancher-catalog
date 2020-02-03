@@ -1,6 +1,7 @@
 apiVersion: v2
 name: test
 description: Reference Implementation for the Trouble Ticket API
+icon: https://bitnami.com/assets/stacks/mongodb/img/mongodb-stack-220x234.png
 
 # A chart can be either an 'application' or a 'library' chart.
 #
