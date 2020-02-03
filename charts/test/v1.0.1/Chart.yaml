@@ -1,7 +1,7 @@
 apiVersion: v2
 name: test
 description: Reference Implementation for the Trouble Ticket API
-icon: https://www.tmforum.org/wp-content/themes/sistina-child/images/tmf-logo-2018.svg
+icon: https://raw.githubusercontent.com/tmforum-rand/tmf-rancher-catalog/master/charts/test/tmforum.png
 
 # A chart can be either an 'application' or a 'library' chart.
 #
