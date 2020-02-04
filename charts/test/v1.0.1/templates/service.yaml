@@ -1,15 +1,12 @@
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: {{ include "test.fullname" . }}
-  labels:
-    {{- include "test.labels" . | nindent 4 }}
+  name: tmf-ttri-api
+  namespace: tmf-dev
 spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+  type: NodePort
   selector:
-    {{- include "test.selectorLabels" . | nindent 4 }}
+    app: tmf-ttri-api
+  ports:
+  - protocol: TCP
+    port: 80

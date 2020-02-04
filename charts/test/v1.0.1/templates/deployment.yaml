@@ -1,55 +1,50 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ include "test.fullname" . }}
-  labels:
-    {{- include "test.labels" . | nindent 4 }}
+  name: tmf-ttri-api
+  namespace: tmf-dev
 spec:
-  replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      {{- include "test.selectorLabels" . | nindent 6 }}
+  replicas: 1
   template:
     metadata:
       labels:
-        {{- include "test.selectorLabels" . | nindent 8 }}
+        app: tmf-ttri-api
     spec:
-    {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-      serviceAccountName: {{ include "test.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-    {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+      - env:
+        - name: DBNAME
+          valueFrom:
+            configMapKeyRef:
+              key: DBNAME
+              name: tmf-config-dev
+        - name: DBNAME
+          valueFrom:
+            configMapKeyRef:
+              key: DBNAME
+              name: tmf-config-dev
+        - name: DBHOST
+          valueFrom:
+            configMapKeyRef:
+              key: DBHOST
+              name: tmf-config-dev
+        - name: DBPROT
+          valueFrom:
+            configMapKeyRef:
+              key: DBPROT
+              name: tmf-config-dev
+        - name: DBUSER
+          valueFrom:
+            configMapKeyRef:
+              key: DBUSER
+              name: tmf-config-dev
+        - name: DBPASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: DBPASSWORD
+              name: tmf-config-dev
+        name: tmf-ttri-api
+        image: henriquefeindt/troubleticket-ri
+        ports:
+          - containerPort: 80
+      # imagePullSecrets:
+      # - name: pipeline-docker-registry
